@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>gh0st-spritx | Contact</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="logo">
+      <img src="https://avatars.githubusercontent.com/u/118146691?v=4" alt="Logo" class="logo-img">
+      gh0st-spritx
+    </a>
+    <nav class="nav" id="navbar">
+      <a href="index.html" class="nav-link">About</a>
+      <a href="achievements.html" class="nav-link">Achievements</a>
+      <a href="contact.html" class="nav-link active">Contact</a>
+      <div class="nav-pill" id="nav-pill"></div>
+    </nav>
+  </header>
+  <div class="sections-wrapper">
+    <section id="contact">
+      <div class="glass-section">
+        <div class="main-info" style="width:100%">
+          <div class="name" style="font-size:1.3rem;">Contact</div>
+          <div class="contact-details">
+            <div><span class="contact-label">Email:</span> soumik.halder.253@northsouth.edu</div>
+            <div><span class="contact-label">Location:</span> Bangladesh</div>
+          </div>
+          <div class="socials">
+            <a href="https://github.com/gh0st-spritx" class="social-link" title="GitHub" target="_blank" rel="noopener"><i data-feather="github"></i></a>
+            <a href="https://twitter.com/" class="social-link" title="Twitter/X" target="_blank" rel="noopener"><i data-feather="twitter"></i></a>
+            <a href="mailto:soumik.halder.253@northsouth.edu" class="social-link" title="Email"><i data-feather="mail"></i></a>
+            <a href="https://www.linkedin.com/" class="social-link" title="LinkedIn" target="_blank" rel="noopener"><i data-feather="linkedin"></i></a>
+            <a href="https://facebook.com/soumikhalderop" class="social-link" title="Facebook" target="_blank" rel="noopener"><i data-feather="facebook"></i></a>
+            <a href="https://discord.com/users/spritx6969" class="social-link" title="Discord" target="_blank" rel="noopener"><i data-feather="message-circle"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    feather.replace();
+    // Floating nav pill logic (same as index.html)
+    const nav = document.getElementById('navbar');
+    const links = nav.querySelectorAll('.nav-link');
+    const pill = document.getElementById('nav-pill');
+    function updateRects() {
+      return Array.from(links).map(link => link.getBoundingClientRect());
+    }
+    function movePillTo(index) {
+      const rects = updateRects();
+      const navRect = nav.getBoundingClientRect();
+      const btnRect = rects[index];
+      if (!btnRect || !navRect) return;
+      const left = btnRect.left - navRect.left;
+      pill.style.left = left + "px";
+      pill.style.width = btnRect.width + "px";
+      pill.style.height = btnRect.height + "px";
+      pill.classList.add('visible');
+    }
+    links.forEach((link, i) => {
+      link.addEventListener('mouseenter', () => movePillTo(i));
+      link.addEventListener('focus', () => movePillTo(i));
+      link.addEventListener('mouseleave', () => {
+        const active = Array.from(links).findIndex(l=>l.classList.contains('active'));
+        movePillTo(active);
+      });
+      link.addEventListener('blur', () => {
+        const active = Array.from(links).findIndex(l=>l.classList.contains('active'));
+        movePillTo(active);
+      });
+    });
+    // On load, set pill to active
+    window.addEventListener('DOMContentLoaded', () => {
+      const active = Array.from(links).findIndex(l=>l.classList.contains('active'));
+      movePillTo(active);
+    });
+    window.addEventListener('resize', () => {
+      const active = Array.from(links).findIndex(l=>l.classList.contains('active'));
+      movePillTo(active);
+    });
+  </script>
+</body>
+</html>

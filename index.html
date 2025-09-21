@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>gh0st-spritx | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <a href="index.html" class="logo">
+      <img src="https://avatars.githubusercontent.com/u/118146691?v=4" alt="Logo" class="logo-img">
+      gh0st-spritx
+    </a>
+    <nav class="nav" id="navbar">
+      <a href="index.html" class="nav-link active">About</a>
+      <a href="achievements.html" class="nav-link">Achievements</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <div class="nav-pill" id="nav-pill"></div>
+    </nav>
+  </header>
+  <div class="sections-wrapper">
+    <section id="main">
+      <div class="glass-section">
+        <img src="https://avatars.githubusercontent.com/u/118146691?v=4" alt="Profile Photo" class="main-photo">
+        <div class="main-info">
+          <div class="name">Soumik Halder</div>
+          <div class="title">Full Stack Developer & Cybersecurity Enthusiast</div>
+          <div class="bio">
+            I am someone training to be a digital bodyguard, except I don’t wear sunglasses indoors.<br><br>
+            I’m driven, curious, and a little too excited about anything involving computers. But at the end of the day, I’m just a friendly human who you would love to have a chat with!<br><br>
+            <span style="opacity:0.8;">Contact me anywhere you like😊, I am just a text away.💬</span>
+          </div>
+          <div>
+            <span class="contact-label">Email:</span> soumik.halder.253@northsouth.edu<br>
+            <span class="contact-label">Location:</span> Bangladesh
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    // Feather icons
+    feather.replace();
+
+    // Floating nav pill logic
+    const nav = document.getElementById('navbar');
+    const links = nav.querySelectorAll('.nav-link');
+    const pill = document.getElementById('nav-pill');
+    function updateRects() {
+      return Array.from(links).map(link => link.getBoundingClientRect());
+    }
+    function movePillTo(index) {
+      const rects = updateRects();
+      const navRect = nav.getBoundingClientRect();
+      const btnRect = rects[index];
+      if (!btnRect || !navRect) return;
+      const left = btnRect.left - navRect.left;
+      pill.style.left = left + "px";
+      pill.style.width = btnRect.width + "px";
+      pill.style.height = btnRect.height + "px";
+      pill.classList.add('visible');
+    }
+    links.forEach((link, i) => {
+      link.addEventListener('mouseenter', () => movePillTo(i));
+      link.addEventListener('focus', () => movePillTo(i));
+      link.addEventListener('mouseleave', () => {
+        const active = Array.from(links).findIndex(l=>l.classList.contains('active'));
+        movePillTo(active);
+      });
+      link.addEventListener('blur', () => {
+        const active = Array.from(links).findIndex(l=>l.classList.contains('active'));
+        movePillTo(active);
+      });
+    });
+    // On load, set pill to active
+    window.addEventListener('DOMContentLoaded', () => {
+      const active = Array.from(links).findIndex(l=>l.classList.contains('active'));
+      movePillTo(active);
+    });
+    window.addEventListener('resize', () => {
+      const active = Array.from(links).findIndex(l=>l.classList.contains('active'));
+      movePillTo(active);
+    });
+  </script>
+</body>
+</html>
